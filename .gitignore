@@ -32,3 +32,9 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+.idea/.idea.dont-eat-my-food-game/riderModule.iml
+.idea/.idea.dont-eat-my-food-game/.idea/contentModel.xml
+.idea/.idea.dont-eat-my-food-game/.idea/indexLayout.xml
+.idea/.idea.dont-eat-my-food-game/.idea/modules.xml
+.idea/.idea.dont-eat-my-food-game/.idea/vcs.xml
+.idea/.idea.dont-eat-my-food-game/.idea/workspace.xml
