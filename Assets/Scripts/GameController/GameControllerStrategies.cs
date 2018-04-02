@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public abstract class GameControllerStrategies {
+public abstract class GameControllerStrategies : MonoBehaviour {
 	protected Scores scoresObject;
+
 	public int MaxNumberOfRecords;
+	public GameObject InputPrefab;
 
 	// Use this for initialization
 	public abstract void  Start () ;
@@ -23,6 +25,8 @@ public class MainGameControllerStrategy : GameControllerStrategies {
 	public override void Update() {
 		if (Input.anyKey) {
 			SceneManager.LoadScene ("ending");
+			PlayerPrefs.SetInt ("LastResult", 1000);
+			PlayerPrefs.SetInt ("LastResultPlayerNumber", 1);
 		}
 	}
 }
@@ -45,11 +49,34 @@ public class OpeningGameControllerStrategy : GameControllerStrategies {
 
 // GameController with all needed Code for Ending Scene
 public class EndingGameControllerStrategy : GameControllerStrategies {
+	List<Scores> lst;
+	bool saveNewScore = false;
+	string winnerPlayerNumber;
+
 	public override void Start() {
-		Debug.Log("hi");
+		if (!saveNewScore) {
+			SceneManager.LoadScene ("opening");
+		} else {
+			var input = Instantiate (InputPrefab);
+			Debug.Log ("trying: " + winnerPlayerNumber);
+			input.GetComponent<InputName> ().playerNumber = winnerPlayerNumber;
+		}
 	}
 
 	public override void Update() {
-		Debug.Log("hi");
+		
+	}
+
+	void Awake() {
+		scoresObject = new Scores ();
+		scoresObject.MaxScoresSaved = MaxNumberOfRecords;
+		winnerPlayerNumber = PlayerPrefs.GetInt ("LastResultPlayerNumber").ToString();
+		Debug.Log ("loaded player number: " + winnerPlayerNumber);
+		var lastScore = PlayerPrefs.GetInt ("LastResult");
+		Debug.Log ("LastScore:" + lastScore);
+
+		saveNewScore = scoresObject.testIsInTop10 (lastScore);
+		Debug.Log ("SaveNewScore:" + saveNewScore);
+
 	}
 }

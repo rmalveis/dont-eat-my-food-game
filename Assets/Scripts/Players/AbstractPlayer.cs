@@ -9,6 +9,7 @@ public abstract class AbstractPlayer : ControlSetup
 	Rigidbody2D rb;
 
 	private bool landed = false;
+	protected PlayerType playerType;
 
 	public void Awake ()
 	{

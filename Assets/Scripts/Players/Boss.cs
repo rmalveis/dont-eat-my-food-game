@@ -6,7 +6,8 @@ public class Boss : AbstractPlayer {
 
 	// Use this for initialization
 	void Start () {
-		
+		this.playerType = PlayerType.Boss;
+		Debug.Log ("Type: " + playerType);
 	}
 	
 	// Update is called once per frame

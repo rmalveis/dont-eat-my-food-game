@@ -393,10 +393,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1595749396}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 898e6dc87ee3cb7478e1ba0ad9a3a70f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8db904b11b220d442a8e3f8f68c2ba70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxNumberOfRecords: 10
+  MaxNumberOfRecords: 0
 --- !u!4 &1595749398
 Transform:
   m_ObjectHideFlags: 0

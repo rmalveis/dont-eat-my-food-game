@@ -6,7 +6,7 @@ public class Employee : AbstractPlayer {
 
 	// Use this for initialization
 	void Start () {
-		
+		this.playerType = PlayerType.Employee;
 	}
 	
 
