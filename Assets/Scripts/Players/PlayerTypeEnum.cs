@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum PlayerType {
-	Boss,
-	Employee
+﻿namespace Players
+{
+	public enum PlayerType {
+		Boss,
+		Employee
+	}
 }

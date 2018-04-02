@@ -1,57 +1,54 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class AbstractPlayer : ControlSetup
+namespace Players
 {
-
-	public string playerNumber;
-	Rigidbody2D rb;
-
-	private bool landed = false;
-	protected PlayerType playerType;
-
-	public void Awake ()
+	public abstract class AbstractPlayer : ControlSetup
 	{
-		rb = GetComponent<Rigidbody2D> ();
-		setController (playerNumber);
-		rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-	}
+
+		public string PlayerNumber;
+		private Rigidbody2D _rb;
+
+		private bool _landed;
+		protected PlayerType playerType;
+
+		public void Awake ()
+		{
+			_rb = GetComponent<Rigidbody2D> ();
+			setController (PlayerNumber);
+			_rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+		}
 
 
-	void FixedUpdate ()
-	{
-		// Fazer a programaão do player
-		var horizontalInput = Input.GetAxis (_horizontal);
+		private void FixedUpdate ()
+		{
+			// Fazer a programaão do player
+			var horizontalInput = Input.GetAxis (_horizontal);
 
-		var modifier = landed ? 10.0f : 5.0f;
+			var modifier = _landed ? 10.0f : 5.0f;
 
-		rb.AddForce (Vector2.right * modifier * horizontalInput, ForceMode2D.Force);
-		if (landed) {
+			_rb.AddForce (Vector2.right * modifier * horizontalInput, ForceMode2D.Force);
+			
+			if (!_landed) return;
+			
 			if (Input.GetButtonDown (_jump)) {
-				rb.AddForce (Vector2.up * 7f, ForceMode2D.Impulse);
+				_rb.AddForce (Vector2.up * 7f, ForceMode2D.Impulse);
 			}
 		}
 
-
-
-	}
-
-	void OnCollisionEnter2D (Collision2D collider)
-	{
-		if (collider.gameObject.tag.Equals ("platform")) {
+		private void OnCollisionEnter2D (Collision2D collider)
+		{
+			if (!collider.gameObject.tag.Equals("platform")) return;
 			
-			landed = true;
-			Debug.Log ("Landed changed to " + landed);
+			_landed = true;
+			Debug.Log ("Landed changed to " + _landed);
 		}
-	}
 
-	void OnCollisionExit2D (Collision2D collider)
-	{
-		if (collider.gameObject.tag.Equals ("platform")) {
+		private void OnCollisionExit2D (Collision2D collider)
+		{
+			if (!collider.gameObject.tag.Equals("platform")) return;
 			
-			landed = false;
-			Debug.Log ("Landed changed to " + landed);
+			_landed = false;
+			Debug.Log ("Landed changed to " + _landed);
 		}
 	}
 }

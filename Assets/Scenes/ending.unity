@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxNumberOfRecords: 10
-  InputPrefab: {fileID: 1966119559384222, guid: 3e5e3e5e9faa7c94c8cad59d9a6d6f1e,
+  InputPrefab: {fileID: 1669367563164008, guid: 3e5e3e5e9faa7c94c8cad59d9a6d6f1e,
     type: 2}
 --- !u!4 &938324980
 Transform:

@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿namespace Players
+{
+	public class Employee : AbstractPlayer {
 
-public class Employee : AbstractPlayer {
-
-	// Use this for initialization
-	void Start () {
-		this.playerType = PlayerType.Employee;
+		// Use this for initialization
+		private void Start () {
+			playerType = PlayerType.Employee;
+		}
 	}
-	
-
 }

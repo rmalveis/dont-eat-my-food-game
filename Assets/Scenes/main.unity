@@ -294,6 +294,11 @@ Prefab:
       propertyPath: m_Constraints
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114600124623149876, guid: 0a136e2c6cad6c14db6643cdc7c41cf0,
+        type: 2}
+      propertyPath: PlayerNumber
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a136e2c6cad6c14db6643cdc7c41cf0, type: 2}
   m_IsPrefabParent: 0
@@ -860,6 +865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxNumberOfRecords: 10
+  InputPrefab: {fileID: 0}
 --- !u!4 &705549992
 Transform:
   m_ObjectHideFlags: 0
@@ -1517,7 +1523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d14985d0c7d6e9439fe5f5059222052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 1
+  PlayerNumber: 1
 --- !u!50 &1599905879
 Rigidbody2D:
   serializedVersion: 4
