@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Players;
+using UnityEditor;
 using UnityEngine;
 
 public static class Scores
 {
-    public static int MaxScoresSaved = 10;
-
     private sealed class Score
     {
         public readonly int _score;
@@ -25,7 +26,7 @@ public static class Scores
         private readonly string _header = "Best Scores \n\n";
         private readonly string _footer = "\n\n Press any key";
         private readonly string _emptyListText = "Be the first to let your mark!";
-        private readonly int _lineLength = 60;
+        private readonly int _lineLength = 30;
 
         public void DrawTable()
         {
@@ -57,51 +58,106 @@ public static class Scores
 
     private sealed class ScoreManagement
     {
+        private readonly int MaxScoresSaved = 10;
+
         public int IsInTop10(int score)
         {
             var savedTopScores = getSavedTopScores();
 
             Debug.Log("LIST COUNT: " + savedTopScores.Count);
+
             // If the list is not fullfilled returns the count
-            if (savedTopScores.Count == 0)
+            if (savedTopScores.Count < MaxScoresSaved)
             {
                 Debug.Log("Returned COUNT " + savedTopScores.Count);
                 return savedTopScores.Count;
             }
 
-            foreach (var s in savedTopScores)
+            var i = 0;
+            while (i < MaxScoresSaved && i < savedTopScores.Count && savedTopScores.Count == MaxScoresSaved)
             {
+                var s = savedTopScores[i];
                 if (s._score < score)
                 {
                     return savedTopScores.IndexOf(s);
                 }
+
+                i++;
             }
 
             return -1;
         }
 
-        public bool SetScore(int score, string name, PlayerType playerType)
+        public bool InsertScoreOnList(int score, string name, PlayerType playerType)
         {
+            Debug.Log("INSER SCORE ON LIST");
             var savedTopScores = getSavedTopScores();
-            foreach (var s in savedTopScores)
+            var item = new Score(score, name, playerType);
+
+            if (savedTopScores.Count < MaxScoresSaved)
             {
-                if (s._score >= score) continue;
-                savedTopScores.Insert(savedTopScores.IndexOf(s), new Score(score, name, playerType));
-                break;
+                savedTopScores.Add(item);
+                savedTopScores = savedTopScores.OrderByDescending(s => s._score).ToList();
+                return WriteTopScores(savedTopScores);
             }
 
-            return true;
+            var i = 0;
+            while (i < MaxScoresSaved && savedTopScores.Count < MaxScoresSaved && i < savedTopScores.Count)
+            {
+                var s = savedTopScores[i];
+                if (s._score < score)
+                {
+                    break;
+                }
+
+                i++;
+            }
+
+            savedTopScores.Insert(i, item);
+            if (savedTopScores.Count > MaxScoresSaved)
+            {
+                savedTopScores.RemoveAt(savedTopScores.Count - 1);
+            }
+
+            savedTopScores = savedTopScores.OrderByDescending(s => s._score).ToList();
+            return WriteTopScores(savedTopScores);
+        }
+
+        private bool WriteTopScores(IList<Score> toSaveScores)
+        {
+            try
+            {
+                var i = 0;
+                PlayerPrefs.DeleteAll();
+
+                while (i < MaxScoresSaved && i < toSaveScores.Count)
+                {
+                    PlayerPrefs.SetString("Scores[" + i + "].name", toSaveScores[i]._name);
+                    PlayerPrefs.SetString("Scores[" + i + "].playerType", toSaveScores[i]._playerType.ToString());
+                    PlayerPrefs.SetInt("Scores[" + i + "].score", toSaveScores[i]._score);
+
+                    i++;
+                }
+
+                PlayerPrefs.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+                return false;
+            }
         }
 
 
         /**
-     * Get Scores saved on PlayerPrefs
-     **/
+         * Get Scores saved on PlayerPrefs
+         **/
         public List<Score> getSavedTopScores()
         {
             var lst = new List<Score>();
 
-            var i = 1;
+            var i = 0;
             while (i < MaxScoresSaved && PlayerPrefs.HasKey("Scores[" + i + "].name"))
             {
                 var strAux = PlayerPrefs.GetString("Scores[" + i + "].playerType");
@@ -111,11 +167,13 @@ public static class Scores
                     PlayerPrefs.GetString("Scores[" + i + "].name"),
                     pTypeAux);
                 lst.Add(tmp);
+                i++;
             }
 
             return lst;
         }
     }
+
 
     public static void DrawScoreTable()
     {
@@ -124,7 +182,7 @@ public static class Scores
 
     public static bool SetNewScore(int score, string name, PlayerType playerType)
     {
-        return new ScoreManagement().SetScore(score, name, playerType);
+        return new ScoreManagement().InsertScoreOnList(score, name, playerType);
     }
 
     public static bool TestIsInTop10(int score)
