@@ -30,7 +30,7 @@ namespace GameController
 
             SceneManager.LoadScene("ending");
             var a = Random.Range(10, 1000);
-            var b = Random.Range(1, 2);
+			var b = (Random.Range (0, 100) % 2) + 1;
             Debug.Log("FROM MAIN: result" + a);
             Debug.Log("FROM MAIN: type" + b);
 
@@ -94,8 +94,7 @@ namespace GameController
 
         private void SaveData(string name)
         {
-            Debug.Log("SAVA DATA:" + name);
-            if (Scores.SetNewScore(_userScore, name, (PlayerType) _winnerPlayerNumber))
+            if (Scores.SetNewScore(_userScore, name, (PlayerType) _winnerPlayerNumber-1))
             {
                 SceneManager.LoadScene("opening");
             }
@@ -104,12 +103,8 @@ namespace GameController
         private void Awake()
         {
             _winnerPlayerNumber = PlayerPrefs.GetInt("LastResultPlayerNumber");
-            Debug.Log("loaded player number: " + _winnerPlayerNumber);
             _userScore = PlayerPrefs.GetInt("LastResult");
-            Debug.Log("LastScore:" + _userScore);
-
             _saveNewScore = Scores.TestIsInTop10(_userScore);
-            Debug.Log("SaveNewScore:" + _saveNewScore);
         }
     }
 }

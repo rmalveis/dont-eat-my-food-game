@@ -7,7 +7,6 @@ namespace Players
 		// Use this for initialization
 		private void Start () {
 			playerType = PlayerType.Boss;
-			Debug.Log ("Type: " + playerType);
 		}
 	
 	}

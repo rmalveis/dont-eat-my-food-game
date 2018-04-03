@@ -1,7 +1,7 @@
 ﻿namespace Players
 {
 	public enum PlayerType {
-		Boss,
-		Employee
+		Boss = 1,
+		Employee = 2
 	}
 }
