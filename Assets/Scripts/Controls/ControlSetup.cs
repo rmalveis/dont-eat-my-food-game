@@ -10,10 +10,10 @@ public class ControlSetup : MonoBehaviour {
 	protected string _vertical;
 
 	protected void setController(string playerNumber) {
-		_jump = "jump-p" + playerNumber;
-		_horizontal = "horizontal-p" + playerNumber;
-		_especial = "especial-p" + playerNumber;
-		_vertical = "vertical-p" + playerNumber;
+		_jump = "AZUL" + playerNumber;
+		_horizontal = "HORIZONTAL" + playerNumber;
+		_especial = "AMARELO" + playerNumber;
+		_vertical = "VERTICAL" + playerNumber;
 	}
 
 }

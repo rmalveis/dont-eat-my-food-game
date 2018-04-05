@@ -28,11 +28,9 @@ namespace GameController
         {
             if (!Input.anyKey) return;
 
-            SceneManager.LoadScene("ending");
+            //SceneManager.LoadScene("ending");
             var a = Random.Range(10, 1000);
 			var b = (Random.Range (0, 100) % 2) + 1;
-            Debug.Log("FROM MAIN: result" + a);
-            Debug.Log("FROM MAIN: type" + b);
 
             PlayerPrefs.SetInt("LastResult", a);
             PlayerPrefs.SetInt("LastResultPlayerNumber", b);
