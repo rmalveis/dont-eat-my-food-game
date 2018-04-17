@@ -8,7 +8,7 @@ namespace Players
 		public string PlayerNumber;
 		private Rigidbody2D _rb;
 
-		private bool _landed;
+		public bool _landed;
 		protected PlayerType playerType;
 
 		public void Awake ()
