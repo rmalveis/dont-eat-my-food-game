@@ -2,53 +2,73 @@
 
 namespace Players
 {
-	public abstract class AbstractPlayer : ControlSetup
-	{
+    public abstract class AbstractPlayer : ControlSetup
+    {
+        public string PlayerNumber;
+        private Rigidbody2D _rb;
+        private SpriteRenderer _sr;
 
-		public string PlayerNumber;
-		private Rigidbody2D _rb;
+        public bool _landed;
+        public float HorizontalVelocityModifier = 700f;
+        public float JumpForceModifier = 200f;
+        protected PlayerType playerType;
 
-		public bool _landed;
-		protected PlayerType playerType;
+        public void Awake()
+        {
+            _rb = GetComponent<Rigidbody2D>();
+            _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-		public void Awake ()
-		{
-			_rb = GetComponent<Rigidbody2D> ();
-			setController (PlayerNumber);
-			_rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-		}
+            _sr = GetComponent<SpriteRenderer>();
+            setController(PlayerNumber);
+        }
 
 
-		private void FixedUpdate ()
-		{
-			// Fazer a programaão do player
-			var horizontalInput = Input.GetAxis (_horizontal);
+        private void FixedUpdate()
+        {
+            var horizontalInput = Input.GetAxis(_horizontal);
 
-			var modifier = _landed ? 10.0f : 5.0f;
 
-			_rb.AddForce (Vector2.right * modifier * horizontalInput, ForceMode2D.Force);
-			
-			if (!_landed) return;
-			
-			if (Input.GetButtonDown (_jump)) {
-				_rb.AddForce (Vector2.up * 7f, ForceMode2D.Impulse);
-			}
-		}
+            var modifier = _landed ? HorizontalVelocityModifier : HorizontalVelocityModifier / 2;
 
-		private void OnCollisionEnter2D (Collision2D collider)
-		{
-			if (!collider.gameObject.tag.Equals("platform")) return;
-			
-			_landed = true;
-			Debug.Log ("Landed changed to " + _landed);
-		}
+            if (_rb.velocity.x <= 7 && _rb.velocity.x >= -7)
+            {
+                _rb.AddForce(Vector2.right * modifier * horizontalInput, ForceMode2D.Force);
+            }
 
-		private void OnCollisionExit2D (Collision2D collider)
-		{
-			if (!collider.gameObject.tag.Equals("platform")) return;
-			
-			_landed = false;
-			Debug.Log ("Landed changed to " + _landed);
-		}
-	}
+
+            if (_landed)
+            {
+                _rb.AddForce(Vector2.up * Input.GetAxis(_jump) * JumpForceModifier, ForceMode2D.Impulse);
+            }
+
+            if (_rb.velocity.x > 0.01f)
+            {
+                if (_sr.flipX)
+                {
+                    _sr.flipX = false;
+                }
+            }
+            else if (_rb.velocity.x < -0.01f)
+            {
+                if (!_sr.flipX)
+                {
+                    _sr.flipX = true;
+                }
+            }
+        }
+
+        private void OnCollisionEnter2D(Collision2D hit)
+        {
+            if (!hit.gameObject.tag.Equals("platform")) return;
+
+            _landed = true;
+        }
+
+        private void OnCollisionExit2D(Collision2D hit)
+        {
+            if (!hit.gameObject.tag.Equals("platform")) return;
+
+            _landed = false;
+        }
+    }
 }

@@ -81,7 +81,6 @@ namespace GameController
             else
             {
                 var input = Instantiate(InputPrefab);
-                Debug.Log("trying: " + _winnerPlayerNumber);
                 input.GetComponent<InputName>().PlayerNumber = _winnerPlayerNumber.ToString();
             }
         }

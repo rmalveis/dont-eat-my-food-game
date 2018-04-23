@@ -64,12 +64,9 @@ public static class Scores
         {
             var savedTopScores = getSavedTopScores();
 
-            Debug.Log("LIST COUNT: " + savedTopScores.Count);
-
             // If the list is not fullfilled returns the count
             if (savedTopScores.Count < MaxScoresSaved)
             {
-                Debug.Log("Returned COUNT " + savedTopScores.Count);
                 return savedTopScores.Count;
             }
 
@@ -90,7 +87,6 @@ public static class Scores
 
         public bool InsertScoreOnList(int score, string name, PlayerType playerType)
         {
-            Debug.Log("INSER SCORE ON LIST");
             var savedTopScores = getSavedTopScores();
             var item = new Score(score, name, playerType);
 
