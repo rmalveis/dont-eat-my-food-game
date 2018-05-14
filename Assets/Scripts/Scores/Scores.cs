@@ -24,7 +24,7 @@ public static class Scores
     {
         private readonly string _header = "Melhores Resultados \n\n";
         private readonly string _footer = "\n\n Aperte e segure <b><color=\"#5B6FF4FF\">\"Azul\"</color></b> para <b>Ajuda</b>. \n Qualquer outra tecla para <b>Jogar</b>.";
-        private readonly string _emptyListText = "Seja o Primeiro a deixar sua marca!";
+        private readonly string _emptyListText = "Nenhum! \n\n Seja o Primeiro a deixar sua marca!";
         private readonly int _lineLength = 30;
 
         public void DrawTable()

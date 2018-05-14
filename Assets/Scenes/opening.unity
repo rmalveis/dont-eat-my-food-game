@@ -440,7 +440,9 @@ MonoBehaviour:
 
 
 
-    Pressione <color="#5B6FF4FF">"AZUL"</color> para AJUDA ou outra tecla para jogar'
+    Aperte e segure <b><color="#5B6FF4FF">"Azul"</color></b> para <b>Ajuda</b>.
+
+    Qualquer outra tecla para <b>Jogar</b>.'
 --- !u!222 &948392069
 CanvasRenderer:
   m_ObjectHideFlags: 0
