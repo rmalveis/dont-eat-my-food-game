@@ -10,6 +10,22 @@ TextureImporter:
     21300006: Empregado_3
     21300008: Empregado_4
     21300010: Empregado_5
+    21300012: Empregado_6
+    21300014: Empregado_7
+    21300016: Empregado_8
+    21300018: Empregado_9
+    21300020: Empregado_10
+    21300022: Empregado_11
+    21300024: Empregado_12
+    21300026: Empregado_13
+    21300028: Empregado_14
+    21300030: Empregado_15
+    21300032: Empregado_16
+    21300034: Empregado_17
+    21300036: Empregado_18
+    21300038: Empregado_19
+    21300040: Empregado_20
+    21300042: Empregado_25
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -97,29 +113,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Empregado_0
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 1220
-        width: 409
-        height: 800
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
       name: Empregado_1
       rect:
         serializedVersion: 2
-        x: 430
-        y: 1220
-        width: 409
-        height: 800
+        x: 873
+        y: 60
+        width: 377
+        height: 873
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -128,12 +130,12 @@ TextureImporter:
       name: Empregado_2
       rect:
         serializedVersion: 2
-        x: 840
-        y: 1210
-        width: 395
-        height: 800
+        x: 0
+        y: 39
+        width: 314
+        height: 803
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,40 +144,54 @@ TextureImporter:
       name: Empregado_3
       rect:
         serializedVersion: 2
-        x: 1238
-        y: 1230
-        width: 330
-        height: 800
+        x: 403
+        y: 55
+        width: 408
+        height: 762
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Empregado_4
+      name: Empregado_7
       rect:
         serializedVersion: 2
-        x: 1575
-        y: 1200
-        width: 409
-        height: 800
+        x: 1363
+        y: 60
+        width: 325
+        height: 794
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Empregado_5
+      name: Empregado_8
       rect:
         serializedVersion: 2
-        x: 1985
-        y: 1210
-        width: 409
-        height: 800
+        x: 1809
+        y: 58
+        width: 407
+        height: 742
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Empregado_11
+      rect:
+        serializedVersion: 2
+        x: 2327
+        y: 57
+        width: 354
+        height: 789
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

@@ -71,20 +71,7 @@ namespace Players
 
         private void FlipSprite()
         {
-            if (_rb.velocity.x > 0.01f)
-            {
-                if (_sr.flipX)
-                {
-                    _sr.flipX = false;
-                }
-            }
-            else if (_rb.velocity.x < -0.01f)
-            {
-                if (!_sr.flipX)
-                {
-                    _sr.flipX = true;
-                }
-            }
+            _sr.flipX = _rb.velocity.x > 0.01f;
         }
 
         private void OnCollisionEnter2D(Collision2D hit)
