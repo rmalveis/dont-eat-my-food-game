@@ -7,7 +7,8 @@ namespace GameController
 {
     public abstract class GameControllerStrategies : MonoBehaviour
     {
-        public GameObject InputPrefab;
+        public GameObject SceneHelperObject;
+        public GameObject SceneHelperObject2;
 
         // Use this for initialization
         public abstract void Start();
@@ -30,7 +31,7 @@ namespace GameController
 
             //SceneManager.LoadScene("ending");
             var a = Random.Range(10, 1000);
-			var b = (Random.Range (0, 100) % 2) + 1;
+            var b = (Random.Range(0, 100) % 2) + 1;
 
             PlayerPrefs.SetInt("LastResult", a);
             PlayerPrefs.SetInt("LastResultPlayerNumber", b);
@@ -48,10 +49,13 @@ namespace GameController
 
         public override void Update()
         {
-            if (Input.anyKey)
+            if (Input.anyKey && Input.GetAxis("AZUL0") == 0f && Input.GetAxis("AZUL1") == 0f)
             {
                 SceneManager.LoadScene("main");
             }
+
+            SceneHelperObject.SetActive(Input.GetAxis("AZUL0") != 0f || Input.GetAxis("AZUL1") != 0f);
+            SceneHelperObject2.SetActive(Input.GetAxis("AZUL0") == 0f && Input.GetAxis("AZUL1") == 0f);
         }
     }
 
@@ -80,7 +84,7 @@ namespace GameController
             }
             else
             {
-                var input = Instantiate(InputPrefab);
+                var input = Instantiate(SceneHelperObject);
                 input.GetComponent<InputName>().PlayerNumber = _winnerPlayerNumber.ToString();
             }
         }
@@ -91,7 +95,7 @@ namespace GameController
 
         private void SaveData(string name)
         {
-            if (Scores.SetNewScore(_userScore, name, (PlayerType) _winnerPlayerNumber-1))
+            if (Scores.SetNewScore(_userScore, name, (PlayerType) _winnerPlayerNumber - 1))
             {
                 SceneManager.LoadScene("opening");
             }

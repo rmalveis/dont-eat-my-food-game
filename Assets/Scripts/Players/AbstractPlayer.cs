@@ -5,6 +5,8 @@ namespace Players
     public abstract class AbstractPlayer : ControlSetup
     {
         public string PlayerNumber;
+        public float fallMultiplier = 1.5f;
+        public float lowJumpMultiplier = 1f;
         private Rigidbody2D _rb;
         private SpriteRenderer _sr;
 
@@ -39,6 +41,16 @@ namespace Players
             if (_landed)
             {
                 _rb.AddForce(Vector2.up * Input.GetAxis(_jump) * JumpForceModifier, ForceMode2D.Impulse);
+                _landed = false;
+            }
+            
+            if (_rb.velocity.y < 0)
+            {
+                _rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier) * Time.fixedDeltaTime;
+            }
+            else if (_rb.velocity.y > 0 && Input.GetAxis(_jump).Equals(0))
+            {
+                _rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier) * Time.fixedDeltaTime;
             }
 
             if (_rb.velocity.x > 0.01f)
@@ -62,13 +74,6 @@ namespace Players
             if (!hit.gameObject.tag.Equals("platform")) return;
 
             _landed = true;
-        }
-
-        private void OnCollisionExit2D(Collision2D hit)
-        {
-            if (!hit.gameObject.tag.Equals("platform")) return;
-
-            _landed = false;
         }
     }
 }

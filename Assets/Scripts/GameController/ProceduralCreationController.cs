@@ -4,13 +4,14 @@ public class ProceduralCreationController : MonoBehaviour
 {
     public Transform Player1;
     public Transform Player2;
+    public GameObject[] Platforms;
+
     private GameObject _currentMapLeft;
     private GameObject _nextMapLeft;
     private GameObject _oldMapLeft;
     private GameObject _currentMapRight;
     private GameObject _nextMapRight;
     private GameObject _oldMapRight;
-
 
     private readonly Vector3 _leftMapInitialPosition = new Vector3(-14.62f, 14.11f, 0);
     private readonly Vector3 _rightMapInitialPosition = new Vector3(2.93f, 14.11f, 0);
@@ -62,28 +63,37 @@ public class ProceduralCreationController : MonoBehaviour
             return;
         }
 
-        var nextMap = GetNextMap();
+        var nextMap = GetNextMap("ProceduralObjects/PO-3");
 
         if (hit.gameObject == _nextMapRight)
         {
             if (_oldMapRight != null)
             {
                 Destroy(_oldMapRight);
+                _oldMapRight = null;
             }
 
             _oldMapRight = _currentMapRight;
             _currentMapRight = _nextMapRight;
-            _nextMapRight = CreateNextMap(nextMap, _rightMapInitialPosition, "Right");
+            var rightMapInitialPosition = new Vector3(2.93f,
+                _currentMapRight.GetComponent<SpriteRenderer>().bounds.size.y +
+                _currentMapRight.gameObject.transform.position.y, 0);
+
+            _nextMapRight = CreateNextMap(nextMap, rightMapInitialPosition, "Right");
         }
         else
         {
             if (_oldMapLeft != null)
             {
                 Destroy(_oldMapLeft);
+                _oldMapLeft = null;
             }
 
             _oldMapLeft = _currentMapLeft;
             _currentMapLeft = _nextMapLeft;
+            Vector3 leftMapInitialPosition = new Vector3(2.93f,
+                _currentMapLeft.GetComponent<SpriteRenderer>().size.y + _currentMapLeft.gameObject.transform.position.y,
+                0);
             _nextMapLeft = CreateNextMap(nextMap, _leftMapInitialPosition, "Left");
         }
     }
@@ -125,20 +135,5 @@ public class ProceduralCreationController : MonoBehaviour
     private GameObject GetNextMap(string prefabName = "ProceduralObjects/PO-1")
     {
         return Resources.Load(prefabName) as GameObject;
-    }
-
-    // LateUpdate is called after Update once per frame
-    void LateUpdate()
-    {
-        if (Player2 != null && Player2.position.y + 3 > 0)
-        {
-//            if (_nextMapRight.GetComponent<Renderer>().isVisible)
-//            {
-//                var nextMap = GetNextMap();
-//                _oldMapRight = _currentMapRight;
-//                _currentMapRight = _nextMapRight;
-//                _nextMapRight = CreateNextMap(nextMap, _rightMapInitialPosition, "Right");
-//            }
-        }
     }
 }

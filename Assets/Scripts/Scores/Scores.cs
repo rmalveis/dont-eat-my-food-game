@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Players;
-using UnityEditor;
 using UnityEngine;
 
 public static class Scores
@@ -23,9 +22,9 @@ public static class Scores
 
     private sealed class ScoreTable
     {
-        private readonly string _header = "Best Scores \n\n";
-        private readonly string _footer = "\n\n Press any key";
-        private readonly string _emptyListText = "Be the first to let your mark!";
+        private readonly string _header = "Melhores Resultados \n\n";
+        private readonly string _footer = "\n\n Aperte e segure <b><color=\"#5B6FF4FF\">\"Azul\"</color></b> para <b>Ajuda</b>. \n Qualquer outra tecla para <b>Jogar</b>.";
+        private readonly string _emptyListText = "Seja o Primeiro a deixar sua marca!";
         private readonly int _lineLength = 30;
 
         public void DrawTable()

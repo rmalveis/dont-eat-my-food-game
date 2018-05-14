@@ -3,7 +3,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameControllerFactory : MonoBehaviour {
-	public GameObject InputPrefab;
+	public GameObject SceneHelperObject;
+
+	public GameObject SceneHelperObject2;
 	// Use this for initialization
 	void Awake ()
 	{
@@ -22,7 +24,8 @@ public class GameControllerFactory : MonoBehaviour {
 			strategy = gameObject.AddComponent<MainGameControllerStrategy> ();
 			break;
 		}
-		strategy.InputPrefab = InputPrefab;
+		strategy.SceneHelperObject = SceneHelperObject;
+		strategy.SceneHelperObject2 = SceneHelperObject2;
 
 	}
 }

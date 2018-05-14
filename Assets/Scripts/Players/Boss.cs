@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Players
+﻿namespace Players
 {
 	public class Boss : AbstractPlayer {
 
