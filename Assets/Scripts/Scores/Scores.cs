@@ -6,17 +6,17 @@ using UnityEngine;
 
 public static class Scores
 {
-    private sealed class Score
+    private sealed class ScoreItem
     {
-        public readonly int _score;
-        public readonly string _name;
-        public readonly PlayerType _playerType;
+        public readonly int Score;
+        public readonly string Name;
+        public readonly PlayerType PlayerType;
 
-        public Score(int score, string name, PlayerType type)
+        public ScoreItem(int score, string name, PlayerType type)
         {
-            _score = score;
-            _name = name;
-            _playerType = type;
+            Score = score;
+            Name = name;
+            PlayerType = type;
         }
     }
 
@@ -29,18 +29,18 @@ public static class Scores
 
         public void DrawTable()
         {
-            var lst = new ScoreManagement().getSavedTopScores();
+            var lst = new ScoreManagement().GetSavedTopScores();
             var aux = _header;
 
             if (lst.Count > 0)
             {
                 foreach (var s in lst)
                 {
-                    var numberOfDots = s._name.Length + s._score.ToString().Length + " as ".Length +
-                                       s._playerType.ToString().Length;
+                    var numberOfDots = s.Name.Length + s.Score.ToString().Length + " as ".Length +
+                                       s.PlayerType.ToString().Length;
                     numberOfDots = _lineLength - numberOfDots;
 
-                    aux += s._name + " as " + s._playerType + new string('.', numberOfDots) + s._score + "\n";
+                    aux += s.Name + " as " + s.PlayerType + new string('.', numberOfDots) + s.Score + "\n";
                 }
             }
             else
@@ -61,7 +61,7 @@ public static class Scores
 
         public int IsInTop10(int score)
         {
-            var savedTopScores = getSavedTopScores();
+            var savedTopScores = GetSavedTopScores();
 
             // If the list is not fullfilled returns the count
             if (savedTopScores.Count < MaxScoresSaved)
@@ -73,7 +73,7 @@ public static class Scores
             while (i < MaxScoresSaved && i < savedTopScores.Count && savedTopScores.Count == MaxScoresSaved)
             {
                 var s = savedTopScores[i];
-                if (s._score < score)
+                if (s.Score < score)
                 {
                     return savedTopScores.IndexOf(s);
                 }
@@ -86,13 +86,13 @@ public static class Scores
 
         public bool InsertScoreOnList(int score, string name, PlayerType playerType)
         {
-            var savedTopScores = getSavedTopScores();
-            var item = new Score(score, name, playerType);
+            var savedTopScores = GetSavedTopScores();
+            var item = new ScoreItem(score, name, playerType);
 
             if (savedTopScores.Count < MaxScoresSaved)
             {
                 savedTopScores.Add(item);
-                savedTopScores = savedTopScores.OrderByDescending(s => s._score).ToList();
+                savedTopScores = savedTopScores.OrderByDescending(s => s.Score).ToList();
                 return WriteTopScores(savedTopScores);
             }
 
@@ -100,7 +100,7 @@ public static class Scores
             while (i < MaxScoresSaved && savedTopScores.Count < MaxScoresSaved && i < savedTopScores.Count)
             {
                 var s = savedTopScores[i];
-                if (s._score < score)
+                if (s.Score < score)
                 {
                     break;
                 }
@@ -114,11 +114,11 @@ public static class Scores
                 savedTopScores.RemoveAt(savedTopScores.Count - 1);
             }
 
-            savedTopScores = savedTopScores.OrderByDescending(s => s._score).ToList();
+            savedTopScores = savedTopScores.OrderByDescending(s => s.Score).ToList();
             return WriteTopScores(savedTopScores);
         }
 
-        private bool WriteTopScores(IList<Score> toSaveScores)
+        private bool WriteTopScores(IList<ScoreItem> toSaveScores)
         {
             try
             {
@@ -127,9 +127,9 @@ public static class Scores
 
                 while (i < MaxScoresSaved && i < toSaveScores.Count)
                 {
-                    PlayerPrefs.SetString("Scores[" + i + "].name", toSaveScores[i]._name);
-                    PlayerPrefs.SetString("Scores[" + i + "].playerType", toSaveScores[i]._playerType.ToString());
-                    PlayerPrefs.SetInt("Scores[" + i + "].score", toSaveScores[i]._score);
+                    PlayerPrefs.SetString("Scores[" + i + "].name", toSaveScores[i].Name);
+                    PlayerPrefs.SetString("Scores[" + i + "].playerType", toSaveScores[i].PlayerType.ToString());
+                    PlayerPrefs.SetInt("Scores[" + i + "].score", toSaveScores[i].Score);
 
                     i++;
                 }
@@ -148,16 +148,16 @@ public static class Scores
         /**
          * Get Scores saved on PlayerPrefs
          **/
-        public List<Score> getSavedTopScores()
+        public List<ScoreItem> GetSavedTopScores()
         {
-            var lst = new List<Score>();
+            var lst = new List<ScoreItem>();
 
             var i = 0;
             while (i < MaxScoresSaved && PlayerPrefs.HasKey("Scores[" + i + "].name"))
             {
                 var strAux = PlayerPrefs.GetString("Scores[" + i + "].playerType");
                 var pTypeAux = strAux == PlayerType.Boss.ToString() ? PlayerType.Boss : PlayerType.Employee;
-                var tmp = new Score(
+                var tmp = new ScoreItem(
                     PlayerPrefs.GetInt("Scores[" + i + "].score"),
                     PlayerPrefs.GetString("Scores[" + i + "].name"),
                     pTypeAux);
