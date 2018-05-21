@@ -16,7 +16,46 @@ namespace Players
         private SpriteRenderer _sr;
         private readonly List<Collider2D> _groundTouched = new List<Collider2D>();
         private bool _jumpRequest;
-        protected PlayerType playerType;
+        private bool _powerUpEnabled;
+        private bool _disabled;
+        private Animator _animator;
+        protected PlayerType _playerType;
+
+        private void OnPowerUpFired(PlayerType playerType)
+        {
+            if (_playerType == playerType) return;
+
+            _disabled = true;
+            _animator.Play("disabled");
+            transform.localScale += new Vector3(0.5f, 0.5f, 0);
+            Invoke("Reenable", 5);
+        }
+
+        private void Reenable()
+        {
+            _disabled = false;
+            transform.localScale -= new Vector3(0.5f, 0.5f, 0);
+            _animator.Play("running");
+        }
+
+        private void OnEnable()
+        {
+            EventManager.OnEnablePowerUp += OnPowerUpEnabled;
+            EventManager.OnPowerUp += OnPowerUpFired;
+        }
+
+        private void OnPowerUpEnabled(PlayerType playertype)
+        {
+            if (playertype != _playerType) return;
+
+            _powerUpEnabled = true;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.OnEnablePowerUp -= OnPowerUpEnabled;
+            EventManager.OnPowerUp -= OnPowerUpFired;
+        }
 
         public void Awake()
         {
@@ -25,14 +64,24 @@ namespace Players
 
             _sr = GetComponent<SpriteRenderer>();
             setController(PlayerNumber);
+
+            _animator = GetComponent<Animator>();
         }
 
-        void Update()
+        private void Update()
         {
+            if (_disabled) return;
+
             // Jump is pressed and player is grounded
             if (Input.GetButtonDown(_jump) && _groundTouched.Count != 0)
             {
                 _jumpRequest = true;
+            }
+
+            if (Input.GetButtonDown(_special) && _powerUpEnabled)
+            {
+                EventManager.CallOnPowerUp(_playerType);
+                _powerUpEnabled = false;
             }
 
             FlipSprite();
@@ -40,6 +89,8 @@ namespace Players
 
         private void FixedUpdate()
         {
+            if (_disabled) return;
+
             if (_jumpRequest)
             {
                 _rb.AddForce(Vector2.up * Input.GetAxis(_jump) * JumpForceModifier, ForceMode2D.Impulse);
@@ -83,6 +134,20 @@ namespace Players
             if (points.Any(p => p.normal == Vector2.up && !_groundTouched.Contains(hit.collider)))
             {
                 _groundTouched.Add(hit.collider);
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D hit)
+        {
+            switch (hit.gameObject.tag)
+            {
+                case "death":
+                    EventManager.CallOnDeath(_playerType);
+                    break;
+                default:
+                    hit.gameObject.SetActive(false);
+                    EventManager.CallOnCollect(_playerType);
+                    break;
             }
         }
 

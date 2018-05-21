@@ -4,7 +4,7 @@
 
 		// Use this for initialization
 		private void Start () {
-			playerType = PlayerType.Employee;
+			_playerType = PlayerType.Employee;
 		}
 	}
 }

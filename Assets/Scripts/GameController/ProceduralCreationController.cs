@@ -55,11 +55,8 @@ public class ProceduralCreationController : MonoBehaviour
 
     private void HandleExitHitNextMap(Collider2D hit)
     {
-        Debug.Log("Execute TriggerEXIT 2D" + hit.gameObject.name);
-
         if (hit.gameObject != _nextMapLeft && hit.gameObject != _nextMapRight)
         {
-            Debug.Log("EXIT NO HANDLER");
             return;
         }
 
