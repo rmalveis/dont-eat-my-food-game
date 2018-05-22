@@ -144,7 +144,7 @@ namespace Players
                 case "death":
                     EventManager.CallOnDeath(_playerType);
                     break;
-                default:
+                case "collectible":
                     hit.gameObject.SetActive(false);
                     EventManager.CallOnCollect(_playerType);
                     break;

@@ -12,9 +12,9 @@ public class EventManager : MonoBehaviour
 
     public static event OnHitAction OnHit;
 
-    public delegate void OnExitHitAction(Collider2D hit);
+    public delegate void OnNextMapExitHitAction(Collider2D hit);
 
-    public static event OnExitHitAction OnExitHit;
+    public static event OnNextMapExitHitAction OnNextMapExitHit;
 
     public delegate void OnDeathAction(PlayerType playerType);
 
@@ -42,9 +42,9 @@ public class EventManager : MonoBehaviour
         if (OnHit != null) OnHit(hit);
     }
 
-    public static void CallExitHit(Collider2D hit)
+    public static void CallNextMapExitHit(Collider2D hit)
     {
-        if (OnExitHit != null) OnExitHit(hit);
+        if (OnNextMapExitHit != null) OnNextMapExitHit(hit);
     }
 
     public static void CallOnDeath(PlayerType playerType)

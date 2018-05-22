@@ -66,10 +66,10 @@ namespace GameController
 
             var pointsToSave = playerType == PlayerType.Employee ? _bossPlayer.Points : _employeePlayer.Points;
 
-            PlayerPrefs.SetInt("LastResult", pointsToSave);
-            PlayerPrefs.SetInt("LastResultPlayerNumber", (int) playerType);
-            PlayerPrefs.Save();
-            SceneManager.LoadScene("ending");
+//            PlayerPrefs.SetInt("LastResult", pointsToSave);
+//            PlayerPrefs.SetInt("LastResultPlayerNumber", (int) playerType);
+//            PlayerPrefs.Save();
+//            SceneManager.LoadScene("ending");
         }
 
         private void OnEnable()
