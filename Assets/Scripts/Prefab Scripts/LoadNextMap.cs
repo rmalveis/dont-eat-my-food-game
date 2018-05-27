@@ -7,6 +7,11 @@ public class LoadNextMap : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D hit)
     {
+        if (hit.gameObject.tag.Equals("collectible") || hit.gameObject.tag.Equals("platform"))
+        {
+            return;
+        }
+
         if (!control.Contains(hit))
         {
             EventManager.CallNextMapExitHit(hit);
