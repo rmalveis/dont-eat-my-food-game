@@ -833,10 +833,10 @@ CompositeCollider2D:
       - {x: -7.4299994, y: 7.247999}
       - {x: -7.4299994, y: 6.5979996}
       - {x: -3.57, y: 6.5979996}
-    - - {x: 8.429999, y: 7.247999}
-      - {x: 4.5699997, y: 7.247999}
-      - {x: 4.5699997, y: 6.5979996}
-      - {x: 8.429999, y: 6.5979996}
+    - - {x: 8.429999, y: 6.281999}
+      - {x: 4.5699997, y: 6.281999}
+      - {x: 4.5699997, y: 5.6319995}
+      - {x: 8.429999, y: 5.6319995}
     - - {x: -0.57, y: 4.671999}
       - {x: -4.4299994, y: 4.671999}
       - {x: -4.4299994, y: 4.0219994}
@@ -1234,7 +1234,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 34efc4d9aeafd6f469d3cba651c7fdc2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1647,7 +1647,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: -6, y: 21, z: 0}
+  - first: {x: 6, y: 18, z: 0}
     second:
       m_TileIndex: 5
       m_TileSpriteIndex: 5
@@ -1656,7 +1656,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 6, y: 21, z: 0}
+  - first: {x: -6, y: 21, z: 0}
     second:
       m_TileIndex: 5
       m_TileSpriteIndex: 5

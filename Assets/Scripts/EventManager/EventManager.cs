@@ -1,69 +1,62 @@
 ﻿using Players;
-using UnityEditor;
 using UnityEngine;
 
-public class EventManager : MonoBehaviour
+namespace EventManager
 {
-    public delegate void SaveNameAction(string name);
-
-    public static event SaveNameAction OnSaveName;
-
-    public delegate void OnHitAction(Collider2D hit);
-
-    public static event OnHitAction OnHit;
-
-    public delegate void OnNextMapExitHitAction(Collider2D hit);
-
-    public static event OnNextMapExitHitAction OnNextMapExitHit;
-
-    public delegate void OnDeathAction(PlayerType playerType);
-
-    public static event OnDeathAction OnDeath;
-
-    public delegate void OnCollectAction(PlayerType playerType);
-
-    public static event OnCollectAction OnCollect;
-
-    public delegate void OnEnablePowerUpAction(PlayerType playerType);
-
-    public static event OnEnablePowerUpAction OnEnablePowerUp;
-
-    public delegate void OnPowerUpAction(PlayerType playerType);
-
-    public static event OnPowerUpAction OnPowerUp;
-
-    public static void CallOnSave(string toSave)
+    public class EventManager : MonoBehaviour
     {
-        if (OnSaveName != null) OnSaveName(toSave);
-    }
+        public delegate void SaveNameAction(string name);
 
-    public static void CallOnHit(Collider2D hit)
-    {
-        if (OnHit != null) OnHit(hit);
-    }
+        public static event SaveNameAction OnSaveName;
 
-    public static void CallNextMapExitHit(Collider2D hit)
-    {
-        if (OnNextMapExitHit != null) OnNextMapExitHit(hit);
-    }
+        public delegate void OnNextMapExitHitAction(Collider2D hit);
 
-    public static void CallOnDeath(PlayerType playerType)
-    {
-        if (OnDeath != null) OnDeath(playerType);
-    }
+        public static event OnNextMapExitHitAction OnNextMapExitHit;
 
-    public static void CallOnCollect(PlayerType playerType)
-    {
-        if (OnCollect != null) OnCollect(playerType);
-    }
+        public delegate void OnDeathAction(PlayerType playerType);
 
-    public static void CallOnPowerUp(PlayerType playerType)
-    {
-        if (OnPowerUp != null) OnPowerUp(playerType);
-    }
+        public static event OnDeathAction OnDeath;
 
-    public static void CallEnablePowerUp(PlayerType playerWhoFiredPowerUp)
-    {
-        if (OnEnablePowerUp != null) OnEnablePowerUp(playerWhoFiredPowerUp);
+        public delegate void OnCollectAction(PlayerType playerType);
+
+        public static event OnCollectAction OnCollect;
+
+        public delegate void OnEnablePowerUpAction(PlayerType playerType);
+
+        public static event OnEnablePowerUpAction OnEnablePowerUp;
+
+        public delegate void OnPowerUpAction(PlayerType playerType);
+
+        public static event OnPowerUpAction OnPowerUp;
+
+        public static void CallOnSave(string toSave)
+        {
+            if (OnSaveName != null) OnSaveName(toSave);
+        }
+
+        public static void CallNextMapExitHit(Collider2D hit)
+        {
+            if (OnNextMapExitHit != null) OnNextMapExitHit(hit);
+        }
+
+        public static void CallOnDeath(PlayerType playerType)
+        {
+            if (OnDeath != null) OnDeath(playerType);
+        }
+
+        public static void CallOnCollect(PlayerType playerType)
+        {
+            if (OnCollect != null) OnCollect(playerType);
+        }
+
+        public static void CallOnPowerUp(PlayerType playerType)
+        {
+            if (OnPowerUp != null) OnPowerUp(playerType);
+        }
+
+        public static void CallEnablePowerUp(PlayerType playerWhoFiredPowerUp)
+        {
+            if (OnEnablePowerUp != null) OnEnablePowerUp(playerWhoFiredPowerUp);
+        }
     }
 }

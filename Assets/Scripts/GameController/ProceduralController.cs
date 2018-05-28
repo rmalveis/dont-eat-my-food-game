@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class ProceduralController : MonoBehaviour
 {
@@ -27,43 +25,12 @@ public class ProceduralController : MonoBehaviour
         }
     }
 
-    public Transform Player1;
-    public Transform Player2;
     public GameObject[] RightPlatforms;
     public GameObject[] LeftPlatforms;
 
     private readonly List<PlatformObject> _rightPlatforms = new List<PlatformObject>();
     private readonly List<PlatformObject> _leftPlatforms = new List<PlatformObject>();
     private System.Random rnd = new System.Random();
-
-    void HandleHitOnMapScroll(Collider2D hit)
-    {
-        if (hit.gameObject.transform != Player1 && hit.gameObject.transform != Player2)
-        {
-            return;
-        }
-
-//        var old = _oldMapLeft;
-//        var next = _nextMapLeft;
-//        var curr = _currentMapLeft;
-        var player = Player1;
-
-        if (hit.gameObject.transform == Player2)
-        {
-//            old = _oldMapRight;
-//            next = _nextMapRight;
-//            curr = _currentMapRight;
-            player = Player2;
-        }
-
-//        curr.transform.Translate(new Vector3(0, player.position.y * 0.01f, 0));
-//        next.transform.Translate(new Vector3(0, player.position.y * 0.01f, 0));
-//        if (old != null)
-//        {
-//            old.transform.Translate(new Vector3(0, player.position.y * 0.01f, 0));
-//        }
-    }
-
 
     private void HandleNextMapExitHitNextMap(Collider2D hit)
     {
@@ -87,7 +54,7 @@ public class ProceduralController : MonoBehaviour
                 aux += "3,4,5,8,9,12,14,15,16,17,18,19,20";
                 break;
             case 3:
-                aux += "4,6,7,10,11,12,13,14,15,17,19,20";
+                aux += "4,6,7,10,11,12,13,14,15,17,20";
                 break;
             case 4:
                 aux += "3,2,1,6,7,8,9,11,12,14,16,17,18,19";
@@ -114,7 +81,7 @@ public class ProceduralController : MonoBehaviour
                 aux += "1,2,3,5,8,9,12,14,15,16,18,20";
                 break;
             case 12:
-                aux += "1,2,3,4,5,8,10,12,13,14,15,16,17,18,20";
+                aux += "1,2,3,4,5,10,12,13,14,15,16,17,18,20";
                 break;
             case 13:
                 aux += "1,2,3,4,5,6,7,8,9,11,12,14,15,16,17,18,19";
@@ -177,8 +144,7 @@ public class ProceduralController : MonoBehaviour
         }
 
 
-        EventManager.OnHit += HandleHitOnMapScroll;
-        EventManager.OnNextMapExitHit += HandleNextMapExitHitNextMap;
+        EventManager.EventManager.OnNextMapExitHit += HandleNextMapExitHitNextMap;
 
         // Crating the first Map:
         ShowFirstMaps();
@@ -186,8 +152,7 @@ public class ProceduralController : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventManager.OnHit -= HandleHitOnMapScroll;
-        EventManager.OnNextMapExitHit -= HandleNextMapExitHitNextMap;
+        EventManager.EventManager.OnNextMapExitHit -= HandleNextMapExitHitNextMap;
     }
 
     private void ShowFirstMaps()
@@ -195,7 +160,7 @@ public class ProceduralController : MonoBehaviour
         var rightMap = _rightPlatforms.Find(p => p.Id == 13);
         var leftMap = _leftPlatforms.Find(p => p.Id == 13);
 
-        var leftFirstMapPosition = new Vector3(-15.2f, -3.3f, 0);
+        var leftFirstMapPosition = new Vector3(-30.2f, -3.3f, 0);
         var rightFirstMapPosition = new Vector3(2.93f, -3.3f, 0);
 
         ActivateMap(rightMap, rightFirstMapPosition);
@@ -224,18 +189,4 @@ public class ProceduralController : MonoBehaviour
 
         ActivateMap(nextMap, v);
     }
-
-//    private GameObject CreateNextMap(GameObject nextMap, Vector3 mapPosition, string sideName)
-//    {
-//        var obj = Instantiate(nextMap, mapPosition, Quaternion.identity);
-//        obj.name += "-" + sideName;
-//
-//        SetLayerRecursively(obj, LayerMask.NameToLayer(sideName + "Player"));
-//        return obj;
-//    }
-
-//    private GameObject GetNextMap(string prefabName = "ProceduralObjects/PO-1")
-//    {
-//        return Resources.Load(prefabName) as GameObject;
-//    }
 }

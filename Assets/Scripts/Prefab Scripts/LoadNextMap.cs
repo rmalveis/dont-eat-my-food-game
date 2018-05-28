@@ -14,7 +14,7 @@ public class LoadNextMap : MonoBehaviour
 
         if (!control.Contains(hit))
         {
-            EventManager.CallNextMapExitHit(hit);
+            EventManager.EventManager.CallNextMapExitHit(hit);
             control.Add(hit);
         }
 

@@ -118,7 +118,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: bd35619146afbb844918f8d436cb3f73, type: 3}
+    m_Font: {fileID: 12800000, guid: 538853a8b481bb64f8501bd092bae6a9, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: bd35619146afbb844918f8d436cb3f73, type: 3}
+    m_Font: {fileID: 12800000, guid: 538853a8b481bb64f8501bd092bae6a9, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -217,7 +217,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: bd35619146afbb844918f8d436cb3f73, type: 3}
+    m_Font: {fileID: 12800000, guid: 538853a8b481bb64f8501bd092bae6a9, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Input your name
+  m_Text: Entre com seu nome
 --- !u!114 &114729143818737568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,7 +250,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: bd35619146afbb844918f8d436cb3f73, type: 3}
+    m_Font: {fileID: 12800000, guid: 538853a8b481bb64f8501bd092bae6a9, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0

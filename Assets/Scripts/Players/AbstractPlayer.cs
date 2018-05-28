@@ -19,6 +19,7 @@ namespace Players
         private bool _powerUpEnabled;
         private bool _disabled;
         private Animator _animator;
+        private BoxCollider2D _bc;
         protected PlayerType _playerType;
 
         private void OnPowerUpFired(PlayerType playerType)
@@ -28,20 +29,24 @@ namespace Players
             _disabled = true;
             _animator.Play("disabled");
             transform.localScale += new Vector3(0.5f, 0.5f, 0);
+            _bc.enabled = false;
+            _rb.bodyType = RigidbodyType2D.Static;
             Invoke("Reenable", 5);
         }
 
         private void Reenable()
         {
             _disabled = false;
+            _bc.enabled = true;
+            _rb.bodyType = RigidbodyType2D.Dynamic;
             transform.localScale -= new Vector3(0.5f, 0.5f, 0);
             _animator.Play("running");
         }
 
         private void OnEnable()
         {
-            EventManager.OnEnablePowerUp += OnPowerUpEnabled;
-            EventManager.OnPowerUp += OnPowerUpFired;
+            EventManager.EventManager.OnEnablePowerUp += OnPowerUpEnabled;
+            EventManager.EventManager.OnPowerUp += OnPowerUpFired;
         }
 
         private void OnPowerUpEnabled(PlayerType playertype)
@@ -53,8 +58,8 @@ namespace Players
 
         private void OnDisable()
         {
-            EventManager.OnEnablePowerUp -= OnPowerUpEnabled;
-            EventManager.OnPowerUp -= OnPowerUpFired;
+            EventManager.EventManager.OnEnablePowerUp -= OnPowerUpEnabled;
+            EventManager.EventManager.OnPowerUp -= OnPowerUpFired;
         }
 
         public void Awake()
@@ -66,6 +71,8 @@ namespace Players
             setController(PlayerNumber);
 
             _animator = GetComponent<Animator>();
+
+            _bc = GetComponent<BoxCollider2D>();
         }
 
         private void Update()
@@ -80,7 +87,7 @@ namespace Players
 
             if (Input.GetButtonDown(_special) && _powerUpEnabled)
             {
-                EventManager.CallOnPowerUp(_playerType);
+                EventManager.EventManager.CallOnPowerUp(_playerType);
                 _powerUpEnabled = false;
             }
 
@@ -142,11 +149,11 @@ namespace Players
             switch (hit.gameObject.tag)
             {
                 case "death":
-                    EventManager.CallOnDeath(_playerType);
+                    EventManager.EventManager.CallOnDeath(_playerType);
                     break;
                 case "collectible":
                     hit.gameObject.SetActive(false);
-                    EventManager.CallOnCollect(_playerType);
+                    EventManager.EventManager.CallOnCollect(_playerType);
                     break;
             }
         }

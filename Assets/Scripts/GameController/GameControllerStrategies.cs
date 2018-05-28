@@ -12,6 +12,7 @@ namespace GameController
     {
         public GameObject SceneHelperObject;
         public GameObject SceneHelperObject2;
+        public GameObject SceneHelperObject3;
 
         // Use this for initialization
         public abstract void Start();
@@ -56,7 +57,7 @@ namespace GameController
             if (SufficientForNextPowerUp > player.Points - player.LastPowerUpAt) return;
 
             player.PowerUpEnabled = true;
-            EventManager.CallEnablePowerUp(playerType);
+            EventManager.EventManager.CallEnablePowerUp(playerType);
         }
 
         private void EndGame(PlayerType playerType)
@@ -64,26 +65,41 @@ namespace GameController
             if (!_gameIsRunning) return;
             _gameIsRunning = false;
 
-            var pointsToSave = playerType == PlayerType.Employee ? _bossPlayer.Points : _employeePlayer.Points;
 
-//            PlayerPrefs.SetInt("LastResult", pointsToSave);
-//            PlayerPrefs.SetInt("LastResultPlayerNumber", (int) playerType);
-//            PlayerPrefs.Save();
-//            SceneManager.LoadScene("ending");
+            int pointsToSave;
+            int lastResultPlayerNumber;
+            switch (playerType)
+            {
+                case PlayerType.Boss:
+                    pointsToSave = _employeePlayer.Points;
+                    lastResultPlayerNumber = (int) PlayerType.Employee;
+                    break;
+                case PlayerType.Employee:
+                    pointsToSave = _bossPlayer.Points;
+                    lastResultPlayerNumber = (int) PlayerType.Boss;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("playerType", playerType, null);
+            }
+
+            PlayerPrefs.SetInt("LastResult", pointsToSave);
+            PlayerPrefs.SetInt("LastResultPlayerNumber", lastResultPlayerNumber);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("ending");
         }
 
         private void OnEnable()
         {
-            EventManager.OnCollect += SumUpCollectedItem;
-            EventManager.OnDeath += EndGame;
-            EventManager.OnPowerUp += OnPowerUpFired;
+            EventManager.EventManager.OnCollect += SumUpCollectedItem;
+            EventManager.EventManager.OnDeath += EndGame;
+            EventManager.EventManager.OnPowerUp += OnPowerUpFired;
         }
 
         private void OnDisable()
         {
-            EventManager.OnCollect -= SumUpCollectedItem;
-            EventManager.OnDeath -= EndGame;
-            EventManager.OnPowerUp -= OnPowerUpFired;
+            EventManager.EventManager.OnCollect -= SumUpCollectedItem;
+            EventManager.EventManager.OnDeath -= EndGame;
+            EventManager.EventManager.OnPowerUp -= OnPowerUpFired;
         }
 
         public override void Start()
@@ -99,12 +115,12 @@ namespace GameController
 
         public override void Update()
         {
-            const string tmplString = "Jogador: <b>{0}</b>\nPontos: <b>{1}</b>\nPowerUp Disponível: <b>{2}</b>";
+            const string tmplString = "Jogador: <b>{0}</b>\nPontos: <b>{1}</b>\n{2}: <b>{3}</b>";
 
             _bossText.text = string.Format(tmplString, "Chefe", _bossPlayer.Points,
-                _bossPlayer.PowerUpEnabled ? "SIM" : "NÃO");
+                "Chamar para o Cafezinho", _bossPlayer.PowerUpEnabled ? "SIM" : "NÃO");
             _employeeText.text = string.Format(tmplString, "Empregado", _employeePlayer.Points,
-                _employeePlayer.PowerUpEnabled ? "SIM" : "NÃO");
+                "Passar ligação de Cliente", _employeePlayer.PowerUpEnabled ? "SIM" : "NÃO");
         }
     }
 
@@ -118,13 +134,21 @@ namespace GameController
 
         public override void Update()
         {
+            SceneHelperObject.SetActive(Input.GetAxis("AZUL0") != 0f || Input.GetAxis("AZUL1") != 0f);
+            SceneHelperObject2.SetActive(!SceneHelperObject.active && !SceneHelperObject3.active);
+
             if (Input.anyKey && Input.GetAxis("AZUL0") == 0f && Input.GetAxis("AZUL1") == 0f)
             {
-                SceneManager.LoadScene("main");
+                SceneHelperObject.SetActive(false);
+                SceneHelperObject3.SetActive(true);
+                CancelInvoke();
+                Invoke("LoadMain", 5);
             }
+        }
 
-            SceneHelperObject.SetActive(Input.GetAxis("AZUL0") != 0f || Input.GetAxis("AZUL1") != 0f);
-            SceneHelperObject2.SetActive(Input.GetAxis("AZUL0") == 0f && Input.GetAxis("AZUL1") == 0f);
+        private void LoadMain()
+        {
+            SceneManager.LoadScene("main");
         }
     }
 
@@ -137,12 +161,12 @@ namespace GameController
 
         private void OnEnable()
         {
-            EventManager.OnSaveName += SaveData;
+            EventManager.EventManager.OnSaveName += SaveData;
         }
 
         private void OnDisable()
         {
-            EventManager.OnSaveName -= SaveData;
+            EventManager.EventManager.OnSaveName -= SaveData;
         }
 
         public override void Start()
@@ -154,7 +178,7 @@ namespace GameController
             else
             {
                 var input = Instantiate(SceneHelperObject);
-                input.GetComponent<InputName>().PlayerNumber = _winnerPlayerNumber.ToString();
+                input.GetComponent<InputName>().PlayerNumber = _winnerPlayerNumber;
             }
         }
 
@@ -164,7 +188,7 @@ namespace GameController
 
         private void SaveData(string name)
         {
-            if (Scores.SetNewScore(_userScore, name, (PlayerType) _winnerPlayerNumber - 1))
+            if (Scores.SetNewScore(_userScore, name, (PlayerType) _winnerPlayerNumber))
             {
                 SceneManager.LoadScene("opening");
             }
