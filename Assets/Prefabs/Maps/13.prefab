@@ -110,7 +110,6 @@ GameObject:
   - component: {fileID: 212554306269897582}
   - component: {fileID: 61960132078080680}
   - component: {fileID: 50704333347165126}
-  - component: {fileID: 66225747943725034}
   m_Layer: 8
   m_Name: bg1
   m_TagString: Untagged
@@ -324,7 +323,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1695548639372384}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -621,9 +620,9 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -688,30 +687,6 @@ CompositeCollider2D:
       - {x: -5.4299994, y: -6.92}
       - {x: -5.4299994, y: -7.57}
       - {x: 11.429999, y: -7.57}
-  m_VertexDistance: 0.0005
---- !u!66 &66225747943725034
-CompositeCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1695548639372384}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths:
-    - - {x: 10.752, y: 7.9212003}
-      - {x: -10.752, y: 7.9212003}
-      - {x: -10.752, y: -7.9212003}
-      - {x: 10.752, y: -7.9212003}
   m_VertexDistance: 0.0005
 --- !u!95 &95370531046501946
 Animator:

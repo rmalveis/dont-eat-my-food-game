@@ -29,6 +29,10 @@ namespace EventManager
 
         public static event OnPowerUpAction OnPowerUp;
 
+        public delegate void OnHideMapAction(Collider2D hit);
+
+        public static event OnHideMapAction OnHideMap;
+
         public static void CallOnSave(string toSave)
         {
             if (OnSaveName != null) OnSaveName(toSave);
@@ -57,6 +61,11 @@ namespace EventManager
         public static void CallEnablePowerUp(PlayerType playerWhoFiredPowerUp)
         {
             if (OnEnablePowerUp != null) OnEnablePowerUp(playerWhoFiredPowerUp);
+        }
+
+        public static void CallOnHideMap(Collider2D hit)
+        {
+            if (OnHideMap != null) OnHideMap(hit);
         }
     }
 }

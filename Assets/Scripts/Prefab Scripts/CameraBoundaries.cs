@@ -6,30 +6,38 @@ using UnityEngine;
 public class CameraBoundaries : MonoBehaviour
 {
     public Transform Player;
-    private float _timer = 10f;
-    private float _height;
+    private const float Amount = 5f;
+    private float _timer = Amount;
 
+    private float _bottomLimit;
 
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
-        _height = transform.GetComponent<SpriteRenderer>().bounds.size.y;
+        _bottomLimit = transform.position.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Player.position.y < transform.position.x + 0.25 * _height)
+        _timer -= Time.deltaTime;
+
+        if (!(_timer <= 0)) return;
+
+        if (Player.position.y >= _bottomLimit)
+        {
+            transform.position = new Vector3(transform.position.x, Player.position.y, 0);
+        }
+
+        _timer = Amount;
+    }
+
+    private void OnTriggerExit2D(Collider2D hit)
+    {
+        if (hit.gameObject.tag.Equals("collectible") || hit.gameObject.tag.Equals("platform"))
         {
             return;
         }
 
-        _timer -= Time.deltaTime;
-
-        if (_timer <= 0)
-        {
-            transform.position = new Vector3(transform.position.x, Player.position.y, 0);
-            _timer = 1;
-        }
+        EventManager.EventManager.CallOnHideMap(hit);
     }
 }
