@@ -10,6 +10,7 @@ namespace Prefab_Scripts
         public int PlayerNumber = 1;
         public GameObject[] Chars;
         public GameObject InputYourNameObject;
+        public UnityEngine.UI.Text CurrentMarker;
 
         private UnityEngine.UI.Text _current;
 
@@ -29,11 +30,11 @@ namespace Prefab_Scripts
         // Update is called once per frame
         private void Update()
         {
-            if (Input.GetButtonUp(_horizontal))
+            if (Input.GetButtonDown(_horizontal))
             {
                 SetFocus(Input.GetAxis(_horizontal) > 0);
             }
-            else if (Input.GetButtonUp(_vertical))
+            else if (Input.GetButtonDown(_vertical))
             {
                 SelectNextLetter(Input.GetAxis(_vertical) < 0);
             }
@@ -55,6 +56,9 @@ namespace Prefab_Scripts
             }
 
             _current = Chars[_currentIndex].GetComponent<UnityEngine.UI.Text>();
+            var aux = _current.transform.position.x - CurrentMarker.transform.position.x ;
+            CurrentMarker.transform.position = CurrentMarker.transform.position + new Vector3(aux, 0, 0);
+            Debug.Log(CurrentMarker.transform.position);
         }
 
         private void SelectNextLetter(bool next)
